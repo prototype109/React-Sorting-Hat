@@ -29,16 +29,55 @@ class Questions extends React.Component{
                         },
                     ],
                     finalAnswer: ''
+                },
+                {
+                    question: 'Question 2',
+                    id: 2,
+                    options: [
+                        {
+                            option: 'I answer Gryffindor',
+                            answerValue: 'Gryffindor'
+                        },
+                        {
+                            option: 'I answer Slytherin',
+                            answerValue: 'Slytherin'
+                        },
+                        {
+                            option: 'I answer Ravenclaw',
+                            answerValue: 'Ravenclaw'
+                        },
+                        {
+                            option: 'I answer Hufflepuff',
+                            answerValue: 'Hufflepuff'
+                        },
+                    ],
+                    finalAnswer: ''
                 }
             ],
             completed: false
         }
     }
 
+    answeredAll = () => {
+        let completed = true;
+        this.state.questions.forEach(question => {
+            if(question.finalAnswer === '')
+                completed = false;
+        })
+        if(completed){
+            this.setState({...this.state, completed: true})
+            this.props.history.push('/results');
+        } else{
+            this.props.history.push(`/question/${Number(this.props.match.params.id) + 1}`)
+        }
+    }
+
     getQuestion = () => {
+        
         const questionId = this.props.match.params.id;
-        const getQuestion = this.state.questions.find(question => `${question.id}` === questionId);
-        return getQuestion;
+        const question = this.state.questions.find(question => `${question.id}` === questionId);
+        console.log('QUESTION: ', question);
+        return question;
     }
 
     getIndex = (currentQuestion) => {
@@ -50,10 +89,13 @@ class Questions extends React.Component{
         const questionChange = {...this.state};
         questionChange.questions[index].finalAnswer = userAnswer;
         this.setState(questionChange);
+        this.answeredAll();
     }
 
     renderQuestion = () => {
-        return <QuestionForm currentQuestion={this.getQuestion} answerQuestion={this.changeAnswer} />
+        return <QuestionForm {...this.props} 
+                             currentQuestion={this.getQuestion} 
+                             answerQuestion={this.changeAnswer} />
     }
 
     render(){

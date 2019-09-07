@@ -1,6 +1,6 @@
 import React from 'react';
 import QuestionForm from './QuestionForm';
-import { Route } from 'react-router-dom';
+//import { Route } from 'react-router-dom';
 
 class Questions extends React.Component{
     constructor(){
@@ -52,10 +52,110 @@ class Questions extends React.Component{
                         },
                     ],
                     finalAnswer: ''
-                }
+                },
+                {
+                    question: 'Question 3',
+                    id: 3,
+                    options: [
+                        {
+                            option: 'I answer Gryffindor',
+                            answerValue: 'Gryffindor'
+                        },
+                        {
+                            option: 'I answer Slytherin',
+                            answerValue: 'Slytherin'
+                        },
+                        {
+                            option: 'I answer Ravenclaw',
+                            answerValue: 'Ravenclaw'
+                        },
+                        {
+                            option: 'I answer Hufflepuff',
+                            answerValue: 'Hufflepuff'
+                        },
+                    ],
+                    finalAnswer: ''
+                },
+                {
+                    question: 'Question 4',
+                    id: 4,
+                    options: [
+                        {
+                            option: 'I answer Gryffindor',
+                            answerValue: 'Gryffindor'
+                        },
+                        {
+                            option: 'I answer Slytherin',
+                            answerValue: 'Slytherin'
+                        },
+                        {
+                            option: 'I answer Ravenclaw',
+                            answerValue: 'Ravenclaw'
+                        },
+                        {
+                            option: 'I answer Hufflepuff',
+                            answerValue: 'Hufflepuff'
+                        },
+                    ],
+                    finalAnswer: ''
+                },
+                {
+                    question: 'Question 5',
+                    id: 5,
+                    options: [
+                        {
+                            option: 'I answer Gryffindor',
+                            answerValue: 'Gryffindor'
+                        },
+                        {
+                            option: 'I answer Slytherin',
+                            answerValue: 'Slytherin'
+                        },
+                        {
+                            option: 'I answer Ravenclaw',
+                            answerValue: 'Ravenclaw'
+                        },
+                        {
+                            option: 'I answer Hufflepuff',
+                            answerValue: 'Hufflepuff'
+                        },
+                    ],
+                    finalAnswer: ''
+                },
+                {
+                    question: 'Question 6',
+                    id: 6,
+                    options: [
+                        {
+                            option: 'I answer Gryffindor',
+                            answerValue: 'Gryffindor'
+                        },
+                        {
+                            option: 'I answer Slytherin',
+                            answerValue: 'Slytherin'
+                        },
+                        {
+                            option: 'I answer Ravenclaw',
+                            answerValue: 'Ravenclaw'
+                        },
+                        {
+                            option: 'I answer Hufflepuff',
+                            answerValue: 'Hufflepuff'
+                        },
+                    ],
+                    finalAnswer: ''
+                },
             ],
             completed: false
         }
+    }
+
+    getResults = () => {
+        let res = [];
+        res = this.state.questions.map(question => {
+            return question.finalAnswer;
+        })
+        this.props.getRes(res);
     }
 
     answeredAll = () => {
@@ -65,7 +165,8 @@ class Questions extends React.Component{
                 completed = false;
         })
         if(completed){
-            this.setState({...this.state, completed: true})
+            this.setState({...this.state, completed: true});
+            this.getResults();
             this.props.history.push('/results');
         } else{
             this.props.history.push(`/question/${Number(this.props.match.params.id) + 1}`)
@@ -76,7 +177,6 @@ class Questions extends React.Component{
         
         const questionId = this.props.match.params.id;
         const question = this.state.questions.find(question => `${question.id}` === questionId);
-        console.log('QUESTION: ', question);
         return question;
     }
 
